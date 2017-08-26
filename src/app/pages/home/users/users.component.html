@@ -1,3 +1,38 @@
-<p>
-  users works!
-</p>
+<div class="content">
+    <table class="table table-bordered table-striped table-responsive" [mfData]="local_users" #mf="mfDataTable" >
+        <thead>
+        <tr>
+            <th>
+                <mfDefaultSorter by="fullName">[Full User Name]</mfDefaultSorter>
+            </th>
+            <th>
+                <mfDefaultSorter by="num_favourites">[Favourited Items]</mfDefaultSorter>
+            </th>
+            <th>
+                <mfDefaultSorter by="num_scans">[Scanned Items]</mfDefaultSorter>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of mf.data">
+            <td>
+                <!--{{vendor.name_english}}-->
+                {{user.fullName}}
+            </td>
+            <td>
+                {{user.num_favourites}}
+            </td>
+            <td>
+                {{user.num_scans}}
+            </td>
+        </tr>
+        </tbody>
+        <!--<tfoot>-->
+        <!--<tr>-->
+        <!--<td colspan="4">-->
+        <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--</tfoot>-->
+    </table>
+</div>
