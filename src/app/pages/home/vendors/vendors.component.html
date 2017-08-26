@@ -1,3 +1,42 @@
-<p>
-  vendors works!
-</p>
+<div class="content">
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+        <tr>
+            <th>
+                [Vendor Name]
+            </th>
+            <th>
+                [Scans]
+            </th>
+            <th>
+                [Favourites]
+            </th>
+            <th>
+                [Vendor ID]
+            </th>
+            <th>
+                [Vendor Stand]
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let vendor of local_vendors">
+            <td>
+                {{vendor.name_english}}
+            </td>
+            <td>
+                {{calculateScans(vendor)}}
+            </td>
+            <td>
+                {{calculateFavourites(vendor)}}
+            </td>
+            <td>
+                {{vendor.id}}
+            </td>
+            <td>
+                {{vendor.stand_number}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

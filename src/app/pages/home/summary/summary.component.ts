@@ -22,8 +22,6 @@ export class SummaryComponent implements OnInit {
         }).then(vendors => {
             this.local_vendors = vendors;
             this.total_user_count = this.calculateTotalUsers();
-            console.log("Printing users");
-            console.log(this.local_users);
         }).catch(ex => {
             console.log(ex);
         });
