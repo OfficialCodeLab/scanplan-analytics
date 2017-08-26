@@ -7,7 +7,9 @@ import { HelpComponent } from './pages/help/help.component';
 import {HomeComponent} from "./pages/home/home.component";
 import { SummaryComponent } from './pages/home/summary/summary.component';
 import { UsersComponent } from './pages/home/users/users.component';
-import { VendorsComponent } from './pages/home/vendors/vendors.component'
+import { VendorsComponent } from './pages/home/vendors/vendors.component';
+import {DataService} from "./services/data.service";
+import {Http, Headers, HttpModule} from '@angular/http';
 
 @NgModule({
     declarations: [
@@ -20,9 +22,10 @@ import { VendorsComponent } from './pages/home/vendors/vendors.component'
     ],
     imports: [
         BrowserModule,
-        AppRoutingModule
+        AppRoutingModule,
+        HttpModule
     ],
-    providers: [],
+    providers: [DataService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

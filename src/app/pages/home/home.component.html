@@ -1,6 +1,6 @@
 <div class="container">
     <h1 class="text-center">ScanPlan Analytics</h1>
-    <h1 *ngIf="loading">Loading new data...</h1>
+    <h1 *ngIf="loading === true">Loading new data...</h1>
     <button class="btn btn-default" (click)="refresh_all_data()">Refresh All Data</button>
     <div class="cs-spacer"></div>
     <ul class="nav nav-tabs">
