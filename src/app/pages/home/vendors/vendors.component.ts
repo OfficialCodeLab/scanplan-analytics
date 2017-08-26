@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "../../../classes/user";
 import {Vendor} from "../../../classes/vendor";
 import {DataService} from "../../../services/data.service";
+import {NgModel} from "@angular/forms"
 
 @Component({
     selector: 'app-vendors',
@@ -12,9 +13,11 @@ export class VendorsComponent implements OnInit {
     local_users: User[];
     local_vendors: Vendor[];
     loading: boolean;
+    search_terms: string;
 
     constructor(public data: DataService) {
 
+        this.search_terms = "";
         Promise.all([data.getUsers(), data.getVendors()]).then(responses => {
             this.local_users = responses[0];
             this.local_vendors = responses[1];

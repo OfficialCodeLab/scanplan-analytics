@@ -1,5 +1,12 @@
 <div class="content">
-    <table class="table table-bordered table-striped table-responsive" [mfData]="local_vendors" #mf="mfDataTable" >
+    <div class="cs-spacer"></div>
+    <div class="form-group">
+        <label>Search</label>
+        <input [(ngModel)]="search_terms" type="text" class="form-control" >
+    </div>
+    <div class="cs-spacer"></div>
+    <div *ngIf="!local_vendors"><h3 class="text-center">Loading...</h3></div>
+    <table *ngIf="local_vendors" class="table table-bordered table-striped table-responsive" [mfData]="local_vendors | vendorSearch: search_terms" #mf="mfDataTable" >
         <thead>
         <tr>
             <th>
@@ -16,6 +23,9 @@
             </th>
             <th>
                 <mfDefaultSorter by="stand_number">[Stand Number]</mfDefaultSorter>
+            </th>
+            <th>
+                <mfDefaultSorter by="category">[Category]</mfDefaultSorter>
             </th>
         </tr>
         </thead>
@@ -35,6 +45,9 @@
             </td>
             <td>
                 {{vendor.stand_number}}
+            </td>
+            <td>
+                {{vendor.category}}
             </td>
         </tr>
         </tbody>

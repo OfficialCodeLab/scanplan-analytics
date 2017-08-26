@@ -11,6 +11,8 @@ import {VendorsComponent} from './pages/home/vendors/vendors.component';
 import {DataTableModule} from "angular2-datatable";
 import {DataService} from "./services/data.service";
 import {Http, Headers, HttpModule} from '@angular/http';
+import { VendorSearchPipe } from './pipes/vendor-search.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -19,13 +21,15 @@ import {Http, Headers, HttpModule} from '@angular/http';
         HomeComponent,
         SummaryComponent,
         UsersComponent,
-        VendorsComponent
+        VendorsComponent,
+        VendorSearchPipe
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpModule,
-        DataTableModule
+        DataTableModule,
+        FormsModule
     ],
     providers: [DataService],
     bootstrap: [AppComponent]
