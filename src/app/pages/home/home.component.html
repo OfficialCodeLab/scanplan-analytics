@@ -4,8 +4,11 @@
     <button class="btn btn-default" (click)="refresh_all_data()">Refresh All Data</button>
     <div class="cs-spacer"></div>
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#">Summary</a></li>
-        <li role="presentation"><a href="#">Users</a></li>
-        <li role="presentation"><a href="#">Vendors</a></li>
+        <li role="presentation"  routerLinkActive="active" ><a routerLink="summary">Summary</a></li>
+        <li role="presentation"  routerLinkActive="active"><a routerLink="users">Users</a></li>
+        <li role="presentation"  routerLinkActive="active"><a routerLink="vendors">Vendors</a></li>
     </ul>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
 </div>
