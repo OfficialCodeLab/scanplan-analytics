@@ -13,6 +13,9 @@ export class Vendor {
     contact_landline: string;
     category: string;
 
+    total_scans: number;
+    total_favourites: number;
+
     constructor(init: any) {
         this.id = init.id;
         this.image_square = init.image_square;

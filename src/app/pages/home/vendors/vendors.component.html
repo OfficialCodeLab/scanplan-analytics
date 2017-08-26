@@ -1,34 +1,34 @@
 <div class="content">
-    <table class="table table-bordered table-striped table-responsive">
+    <table class="table table-bordered table-striped table-responsive" [mfData]="local_vendors" #mf="mfDataTable" >
         <thead>
         <tr>
             <th>
-                [Vendor Name]
+                <mfDefaultSorter by="name_english">[Vendor Name]</mfDefaultSorter>
             </th>
             <th>
-                [Scans]
+                <mfDefaultSorter by="total_scans">[Scans]</mfDefaultSorter>
             </th>
             <th>
-                [Favourites]
+                <mfDefaultSorter by="total_favourites">[Favourites]</mfDefaultSorter>
             </th>
             <th>
-                [Vendor ID]
+                <mfDefaultSorter by="id">[ID]</mfDefaultSorter>
             </th>
             <th>
-                [Vendor Stand]
+                <mfDefaultSorter by="stand_number">[Stand Number]</mfDefaultSorter>
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let vendor of local_vendors">
+        <tr *ngFor="let vendor of mf.data">
             <td>
                 {{vendor.name_english}}
             </td>
             <td>
-                {{calculateScans(vendor)}}
+                {{vendor.total_scans}}
             </td>
             <td>
-                {{calculateFavourites(vendor)}}
+                {{vendor.total_favourites}}
             </td>
             <td>
                 {{vendor.id}}
@@ -38,5 +38,12 @@
             </td>
         </tr>
         </tbody>
+        <!--<tfoot>-->
+        <!--<tr>-->
+            <!--<td colspan="4">-->
+                <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--</tfoot>-->
     </table>
 </div>

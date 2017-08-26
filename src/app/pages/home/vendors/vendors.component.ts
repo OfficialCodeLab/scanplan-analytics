@@ -18,14 +18,19 @@ export class VendorsComponent implements OnInit {
         Promise.all([data.getUsers(), data.getVendors()]).then(responses => {
             this.local_users = responses[0];
             this.local_vendors = responses[1];
+
+            this.refresh_all();
+
         }).catch(ex => console.log(ex));
 
         data.users_event.subscribe(users => {
             this.local_users = users;
+            this.refresh_all();
         });
 
         data.vendors_event.subscribe(vendors => {
             this.local_vendors = vendors;
+            this.refresh_all();
         });
     }
 
@@ -33,24 +38,33 @@ export class VendorsComponent implements OnInit {
 
     }
 
-    calculateScans(vendor: Vendor): number {
-        let count = 0;
-        for (let user of this.local_users) {
-            if (user.scannedItems.indexOf(vendor.id) !== -1) {
-                count++;
+    calculateScans(): void {
+        for (let vendor of this.local_vendors) {
+            let count = 0;
+            for (let user of this.local_users) {
+                if (user.scannedItems.indexOf(vendor.id) !== -1) {
+                    count++;
+                }
             }
+            vendor.total_scans = count;
         }
-        return count;
     }
 
-    calculateFavourites(vendor: Vendor): number {
-        let count = 0;
-        for (let user of this.local_users) {
-            if (user.Favourites.indexOf(vendor.name_english) !== -1) {
-                count++;
+    calculateFavourites(): void {
+        for (let vendor of this.local_vendors) {
+            let count2 = 0;
+            for (let user of this.local_users) {
+                if (user.Favourites.indexOf(vendor.name_english) !== -1) {
+                    count2++;
+                }
             }
+            vendor.total_favourites = count2;
         }
-        return count;
+    }
+
+    refresh_all(): void {
+        this.calculateFavourites();
+        this.calculateScans();
     }
 
 }
