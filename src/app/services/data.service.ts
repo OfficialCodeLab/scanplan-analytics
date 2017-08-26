@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {Vendor} from "../classes/vendor";
 import {User} from "../classes/user";
 import {Http, Headers, HttpModule} from '@angular/http';
@@ -10,34 +10,60 @@ import 'rxjs/add/operator/toPromise';
 export class DataService {
     all_users: User[];
     all_vendors: Vendor[];
+
+    users_event: EventEmitter<User[]> = new EventEmitter();
+    vendors_event: EventEmitter<Vendor[]> = new EventEmitter();
+
     BASE_URL: string;
+
+    initial_load: boolean;
+    loadEvent: EventEmitter<boolean> = new EventEmitter();
+
 
     constructor(public http: Http) {
         this.BASE_URL = "http://138.68.133.255:1337";
         this.all_users = [];
         this.all_vendors = [];
+        this.initial_load = true;
 
         this.setupDatabase().then(success => {
             console.log("Refreshed database!");
+            this.initial_load = false;
+            this.loadEvent.emit(this.initial_load);
         }).catch(ex => {
             console.log("Unable to get database!", ex);
+            this.initial_load = false;
+            this.loadEvent.emit(this.initial_load);
         });
     }
 
     getUsers(): Promise<User[]> {
-        if (this.all_users.length !== 0) {
-            return Promise.resolve(this.all_users);
-        } else {
-            return Promise.resolve(this.all_users);
-        }
+        return new Promise((resolve, reject) => {
+            if (this.all_users.length !== 0) {
+                console.log(this.all_users);
+                resolve(this.all_users);
+            } else {
+                this.loadEvent.subscribe(loading => {
+                    if (loading === false) {
+                        resolve(this.all_users);
+                    }
+                });
+            }
+        });
     }
 
     getVendors(): Promise<Vendor[]> {
-        if (this.all_vendors.length !== 0) {
-            return Promise.resolve(this.all_vendors);
-        } else {
-            return Promise.resolve(this.all_vendors);
-        }
+        return new Promise((resolve, reject) => {
+            if (this.all_vendors.length !== 0) {
+                resolve(this.all_vendors);
+            } else {
+                this.loadEvent.subscribe(loading => {
+                    if (loading === false) {
+                        resolve(this.all_vendors);
+                    }
+                });
+            }
+        });
     }
 
     setupDatabase(): Promise<any> {
@@ -48,8 +74,10 @@ export class DataService {
 
             Promise.all([userPromise, vendorPromise]).then(resultsArr => {
                 console.log(typeof resultsArr);
-                // console.log(resultsArr[0].json());
-                // All promises are done;
+
+                this.all_users = [];
+                this.all_vendors = [];
+
                 for (let user of resultsArr[0].json()) {
                     this.all_users.push(new User(user));
                 }
@@ -59,6 +87,10 @@ export class DataService {
                 }
 
                 console.log("Setup all assets!");
+
+                this.users_event.emit(this.all_users);
+                this.vendors_event.emit(this.all_vendors);
+
                 resolve();
                 // console.log(this.all_users);
 
